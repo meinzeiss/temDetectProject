@@ -1,0 +1,42 @@
+<mat-toolbar [color]="localColor">
+  <span style="width: 50%;">{{appTitle}}</span>  
+  <span class="example-spacer">任务状态：{{taskInfo}}</span>
+  <span class="example-spacer">报警状态：{{sysStatus ? '无' : '异常'}}</span>
+  <mat-icon class="ico" *ngIf="showMaintianBell"></mat-icon>
+  <mat-icon class="notifyMaintain" *ngIf="showMaintianBell">维护</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="menu" >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="loginOrLogout()">
+      <mat-icon>account_circle</mat-icon>
+      <span>{{loginStatus == 0 ? '登录':(loginStatus == 2 ? '验证中...' :'退出登录')}}</span>
+    </button>
+    <button mat-menu-item (click)="gotoMonitor()">
+      <mat-icon>apps</mat-icon>
+      <span>监控中心</span>
+    </button>
+    <button mat-menu-item (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
+      <span>刷新</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon>
+      <span>Disable alerts</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+<nz-modal style="font-size: 0.5rem" [(nzVisible)]="showDialog" nzTitle="提示" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <p style="font-size: 0.5rem">{{ dialogMsg }}</p>
+  </ng-container>
+</nz-modal>
+<nz-modal style="font-size: 0.5rem" [(nzVisible)]="showPwDialog" nzTitle="提示" (nzOnCancel)="pwHandleCancel()"
+  (nzOnOk)="pwHandleOk()">
+  <ng-container *nzModalContent>
+    <p style="font-size: 0.6rem">请录入登录密码</p>
+    <input maxlength="6" placeholder="请录入" [(ngModel)]="loginPw" nzAutosize
+     style="font-size: 0.6rem;width: 8rem;height: 1.2rem; color: ivory;background-color:#484845;border-radius: 0.1rem;border-color: grey;"/>
+  </ng-container>
+</nz-modal>

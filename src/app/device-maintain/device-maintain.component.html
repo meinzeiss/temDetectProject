@@ -1,0 +1,63 @@
+<div class="cLayout">
+    <mat-card style="width: auto;margin-right: 0.3rem;margin-bottom: 0.3rem;" class="content">
+        <div style="display:flex;flex-direction: column;width: 100%;">
+            <mat-card-content fxLayout="row">
+                <label style="width: 4.5rem;font-size: 0.6rem;">维护说明：</label>
+                <textarea nz-input
+                    style="font-size: 0.6rem;width: 28.5rem;height: 3.5rem;color: ivory;background-color:#484845;border-radius: 0.1rem;border-color: grey;padding: 0.1rem;"
+                    maxlength="120" placeholder="请录入说明内容" [(ngModel)]="maintianDes" nzAutosize></textarea>
+            </mat-card-content>
+            <button mat-raised-button color="primary" class="buttonSize"
+                style="width: 5rem;margin-left: 28rem; justify-self:baseline;" (click)="saveMaintainDes()">保存</button>
+            <div fxLayout="row" style="height:1px; background-color:darkgrey;margin-top: 1rem;"></div>
+            <mat-card-content fxLayout="row">
+                <div style="display: flex;flex-direction: row;margin-top: 1rem;">
+                    <mat-label style="width: 4.5rem; font-size: 0.6rem;">提前提醒天数：</mat-label>
+                    <input type="number" min="1"
+                        oninput="value.length > 3 ? value=value.slice(0,3) : this.value=this.value.replace(/\D/g);"
+                        style="font-size: 0.6rem;width: 11rem;height: 1.2rem; color: ivory;background-color:#484845;border-radius: 0.1rem;border-color: grey; "
+                        placeholder="请录入天数" [(ngModel)]="noticeDaysCnt">
+                    <mat-label style="width: 5.5rem; font-size: 0.6rem;margin-left: 1rem;">维护周期(天数)：</mat-label>
+                    <input type="number" min="1"
+                        oninput="value.length > 3 ? value=value.slice(0,3) : this.value=this.value.replace(/\D/g);"
+                        style="font-size: 0.6rem;width: 11rem;height: 1.2rem; color: ivory;background-color:#484845;border-radius: 0.1rem;border-color: grey;"
+                        placeholder="请录入天数" [(ngModel)]="maintainDuration">
+                </div>
+            </mat-card-content>
+            <button mat-raised-button color="primary" class="buttonSize"
+                style="width: 5rem;margin-left: 28rem; justify-self:baseline;" (click)="setMaintainDays()">设置</button>
+            <div fxLayout="row" style="height:1px; background-color:darkgrey;margin-top: 1rem;"></div>
+            <mat-card-content fxLayout="row">
+                <div style="display: flex;flex-direction: row;margin-top: 1rem;">
+                    <mat-label style="width: 4.5rem; font-size: 0.6rem;">上次维护时间：</mat-label>
+                    <textarea nz-input rows="2" disabled="true"
+                        style="font-size: 0.6rem;width: 11rem;height: 1.2rem; color: #b1b2a4;background-color:#484845;border-radius: 0.1rem;border-color: grey; "
+                        maxlength="30" placeholder="" [(ngModel)]="lastMaintainTime" nzAutosize></textarea>
+                    <mat-label style="width: 5.5rem; font-size: 0.6rem;margin-left: 1rem;">{{showOverDays ?
+                        '超期':'倒计时'}}(天数)：</mat-label>
+                    <textarea nz-input rows="2" disabled="true"
+                        style="font-size: 0.6rem;width: 11rem;height: 1.2rem; color: #b1b2a4;background-color:#484845;border-radius: 0.1rem;border-color: grey;"
+                        maxlength="30" placeholder="" [(ngModel)]="dayRemainingCnt" nzAutosize></textarea>
+                </div>
+            </mat-card-content>
+            <button mat-raised-button color="primary" class="buttonSize"
+                style="width: 5rem;margin-left: 28rem; justify-self:baseline;" (click)="showConfirmDialog(3)"
+                [disabled]="isSaving">维护</button>
+            <div fxLayout="row" style="height:1px; background-color:darkgrey;margin-top: 1rem;"></div>
+        </div>
+    </mat-card>
+
+    <nz-modal style="font-size: 0.5rem;" [(nzVisible)]="showConfirm"showConfirm nzTitle="提示" (nzOnCancel)="confirmCancel()" 
+        (nzOnOk)="confirmOk()">
+        <ng-container *nzModalContent>
+            <p style="font-size: 0.5rem;">{{confirmMsg}}</p>
+        </ng-container>
+    </nz-modal>
+
+    <nz-modal style="font-size: 0.5rem;" [(nzVisible)]="showMsgDialog" nzTitle="提示" (nzOnCancel)="handleCancel()" 
+        (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            <p style="font-size: 0.5rem;">{{dialogMsg}}</p>
+        </ng-container>
+    </nz-modal>
+</div>

@@ -1,0 +1,130 @@
+nz-range-picker {
+    margin: 0.2rem;
+    width: 10rem;
+}
+
+.buttonSize {
+    font-size: 0.6rem;
+    height: 1.6rem;
+    background-color: rgb(97, 97, 97);
+    margin-bottom: 0.1rem;
+    margin-right: 0.1rem;
+}
+
+.myhr {
+    width: 100%;
+    height: 1px;
+    background-color: gray;
+    margin-top: 0.4rem;
+    margin-bottom: 0.1rem;
+
+}
+
+.cLayout {
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+    overflow: auto;
+}
+
+.tableFontSize {
+    font-size: 0.5rem;
+    color: ivory;
+}
+
+.tableFontSizeLarge {
+    font-size: 0.6rem;
+    color: ivory;
+}
+
+tbody tr:hover {
+    cursor: default;
+    font-weight: bolder;
+    font-size: 0.65rem;
+    color: yellow;
+}
+
+tbody tr td a:hover {
+    cursor: default;
+    font-weight: bolder;
+    font-size: 0.65rem;
+    color: yellow;
+}
+
+#circle {
+    animation: loading-circle 1.4s ease-in-out infinite;
+    /* 圆内填充 */
+    fill: none;
+    /* 圆周颜色 */
+    stroke: ivory;
+    /* 圆周宽度 */
+    stroke-width: 0.2rem;
+}
+
+@keyframes loading-circle {
+    0% {
+        stroke-dasharray: 1px 200px;
+        stroke-dashoffset: 0;
+    }
+
+    30% {
+        stroke-dasharray: 100px 200px;
+        stroke-dashoffset: -15px;
+        stroke: gray;
+    }
+
+    100% {
+        stroke-dasharray: 100px 200px;
+        stroke-dashoffset: -120px;
+    }
+}
+
+.circle-loading-svg {
+    animation: loading-rotate 1.4s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+@keyframes loading-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.showMax {
+    flex: 1;
+}
+
+.showLeft {
+    flex: 0.7;
+}
+
+.myDesc {
+    font-size: 0.5rem;
+    color: ivory;
+    white-space:nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+}
+.rangMsg{
+    text-align: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.6rem;
+    color: yellow;
+}

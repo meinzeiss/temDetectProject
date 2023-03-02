@@ -1,0 +1,154 @@
+
+<div class="cLayout">
+  <!-- <div [style.grid-area]="'content'" style="padding-right: 1rem;" > -->
+    
+    <mat-form-field appearance="fill" class="selectForm"  >
+      <mat-select (selectionChange)="selChanged($event)" >
+      <mat-option *ngFor="let posItm of pos" [value]="posItm.value">
+        {{posItm.viewValue}}
+      </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <div  class="content" [style.visibility]="contentShow ? 'visible' : 'hidden'"  > <!--  fxLayout="column" -->
+        
+<mat-card class="cardClass">
+  <mat-card-title > 动作指令允许最大执行时长 {{SliderActMaxSeconds.value}}  
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[0]">open_in_browser</mat-icon> </mat-card-title>
+    <!-- *ngIf="!hideWarn_Pos" -->
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  <mat-card-content >
+    <mat-slider  min="5" max="180" step="1" value="20" #SliderActMaxSeconds aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(0,  $event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 力传感器超载安全范围(伸) {{SliderFSensorOLSafeRange_Push.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[1]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="0" max="2000" step="100" value="1000" #SliderFSensorOLSafeRange_Push aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(1, $event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 力传感器超载安全范围(缩) -{{SliderFSensorOLSafeRange_Pull.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[2]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="0" max="2000" step="100" value="1000" #SliderFSensorOLSafeRange_Pull aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(2, $event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 力传感器样品超载安全范围  {{SliderFSensorSampleOLSafeRnage.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[3]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="0" max="100" step="5" value="10" #SliderFSensorSampleOLSafeRnage aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(3,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> [静载] 未达目标力值最大时长(秒数)  {{SliderMaxActSecondsBeforeReachForce.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[4]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="5" max="60" step="1" value="10" #SliderMaxActSecondsBeforeReachForce aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(4,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 动作掉力保护(%)  {{SliderForceDownRange.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[5]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="20" max="100" step="1" value="50" #SliderForceDownRange aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(5,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 比例阀增益  {{SliderProportionalRate.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[6]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="1" max="20" step="1" value="5" #SliderProportionalRate aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(6,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 目标力值允许偏差(上)  {{SliderTForceUDeviationRate.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[7]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="1" max="200" step="1" value="5" #SliderTForceUDeviationRate aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(7,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 目标力值允许偏差(下)  {{SliderTForceDDeviationRate.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[8]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="1" max="200" step="1" value="5" #SliderTForceDDeviationRate aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(8,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card class="cardClass">
+  <mat-card-title> 补充b值  {{SliderForceFactorB.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[9]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="0" max="200" step="10" value="0" #SliderForceFactorB aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(9,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 传感器容量  {{SliderSensorCapacity.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[10]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="500" max="3000" step="20" value="1000" #SliderSensorCapacity aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(10,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardClass">
+  <mat-card-title> 设置标准重量  {{SliderStandWeight.value}}
+    <mat-icon style="margin-left:1rem;color: yellow;" *ngIf="showSaveMark[11]">open_in_browser</mat-icon> </mat-card-title>
+ <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+  
+  <mat-card-content >
+    <mat-slider  min="500" max="2000" step="20" value="0" #SliderStandWeight aria-label="unit(s)" fxFlex="80%" class="slider" (input)="sliderValChanged(11,$event);"></mat-slider>
+  </mat-card-content>
+</mat-card>
+    </div>
+  <!-- </div> -->
+
+  <!-- <div class="footer">
+    
+    <button mat-flat-button class="footerButton" >保存</button>
+  </div>
+   -->
+  <div  class="footer" >
+    <!-- determinate' | 'indeterminate' | 'buffer' | 'query -->
+    <mat-progress-bar [mode]="barMode" style="height:0.3rem;margin-left: 1rem;margin-top: 1rem;" fxFlex="70%" ></mat-progress-bar>
+    <button mat-flat-button  class="footerButton" (click)="save()"> 保 存 </button>
+  </div>
+  
+</div>
+ 
+
+
+
+

@@ -1,0 +1,163 @@
+<div class="cLayout">
+    <mat-card style="width: auto; margin-right: 0.3rem; margin-bottom: 0.3rem" class="content">
+        <mat-card-content fxLayout="column" style="min-height: 20rem">
+            <div fxLayout="row">
+                <mat-label style="align-self: center; font-size: 0.6rem">检索日期范围：</mat-label>
+                <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" style="border-color: gray"
+                    nzSize="large">
+                </nz-range-picker>
+                <button mat-raised-button color="primary" class="buttonSize" style="width: 4rem; margin-left: 1rem"
+                    (click)="onTasksSearch()">
+                    检索
+                </button>
+                <button mat-raised-button color="primary" class="buttonSize" *ngIf="hasCookie"
+                    style="width: 4rem; justify-content: flex-end;margin-left: auto;"
+                    (click)="deleteSelectedTasks()">删除</button>
+            </div>
+            <div class="myhr"></div>
+            <nz-table #fixedTable nzTableLayout="fixed" nzShowPagination [nzData]="listOfTasks"
+                nzHideOnSinglePage="false" [nzFrontPagination]="false" [nzLoading]="loading" [nzTotal]="total"
+                [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)">
+                <thead>
+                    <tr class="tableFontSize">
+                        <th *ngIf="hasCookie" nzWidth="5%" [nzChecked]="allSelectedInPage" [nzIndeterminate]="chkBoxIndeterminate"
+                            (nzCheckedChange)="onAllChecked($event)"></th>
+                        <th nzWidth="15%" nzColumnKey="Uid">任务编号</th>
+                        <th nzWidth="15%" nzColumnKey="StartTime">开始时间</th>
+                        <th nzWidth="15%" nzColumnKey="EndTime">结束时间</th>
+                        <th nzWidth="10%">任务时长</th>
+                        <th nzWidth="8%">任务状态</th>
+                        <th nzEllipsis nzColumnKey="Desc">任务描述</th>
+                        <th nzWidth="8%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tableFontSize" *ngFor="let data of fixedTable.data">
+                        <td *ngIf="hasCookie" [nzChecked]="setOfCheckedId.has(data.Uid)"
+                            (nzCheckedChange)="onItemChecked(data.Uid, $event)">
+                        </td>
+                        <td>{{ data.Uid }}</td>
+                        <td>{{ data.ITime }}</td>
+                        <td>{{ data.EndTime }}</td>
+                        <td>{{ calcDurationTime(data.ITime, data.EndTime) }} 分钟</td>
+                        <td>{{ getStatusInfo(data.Status) }}</td>
+                        <td nzEllipsis>{{ data.Desc }}</td>
+                        <td>
+                            <a (click)="
+                  onTaskDetail(data.Uid, data.EndTime, data.ITime, data.Desc)
+                " class="tableFontSize">查看</a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a [href]="baseUrl + '?Uid=' + data.Uid" class="tableFontSize">下载</a>
+                            <!-- <nz-divider nzType="vertical"></nz-divider> -->
+                            <!-- <a (click)="showDeleteDlg(data.Uid,data.Desc)" class="tableFontSize" style="margin-left: 1rem;color:#FF7B7B">删除</a> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+
+            <nz-drawer [nzClosable]="false" [nzVisible]="showDetailFlg" [nzPlacement]="placement" [nzExtra]="extra"
+                nzTitle="任务ID：{{ taskUid }}, 任务起始时间：{{ taskTimeStr }}" (nzOnClose)="close()" [nzClosable]="true"
+                nzHeight="24rem">
+                <ng-container *nzDrawerContent>
+                    <div fxLayout="row">
+                        <div style="flex: 0.025">
+                            <nz-switch [(ngModel)]="xAxisFromZeroFlg" aria-selected=""
+                                (ngModelChange)="xAxisChange($event)" nzSize="default"
+                                style="position: relative; top: 14.5rem"></nz-switch>
+                            <div style="position: relative; top: 11.5rem">切换时间显示格式</div>
+                        </div>
+                        <div style="flex: 0.65">
+                            <div fxLayout="row">
+                                <label style="width: 2rem; font-size: 0.5rem">描述：</label>
+                                <h5 class="myDesc" style="width: 1080px;">{{ taskDesc }}</h5>
+                            </div>
+                            <div style="height: 1.2rem"></div>
+                            <div #mychart echarts [options]="chartOption" class="chartBox" [autoResize]="false"
+                                (chartInit)="onChartInit($event)" [merge]="updateOptions"
+                                (chartLegendSelectChanged)="legendSelectedChange($event)" style="height: 16rem"></div>
+                            <!-- <div class="rangMsg" >{{selectedRangeMsg}}</div> -->
+                        </div>
+                        <div style="flex: 0.325">
+                            <div>
+                                <nz-table #headerTable [nzData]="calcData" [nzPageSize]="15" [nzScroll]="{ y: '13rem' }"
+                                    [nzLoading]="isCalcTableLoading" [nzLoadingIndicator]="indicatorTemplate">
+                                    <thead>
+                                        <tr class="tableFontSizeLarge">
+                                            <th>选择通道</th>
+                                            <th>MIN</th>
+                                            <th>MAX</th>
+                                            <th>P-P</th>
+                                            <th>Mean</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="tableFontSizeLarge" *ngFor="let data of headerTable.data">
+                                            <td>{{ data.channelName }}</td>
+                                            <td>{{ data.min }}</td>
+                                            <td>{{ data.max }}</td>
+                                            <td>{{ data.pp }}</td>
+                                            <td>{{ data.mean }}</td>
+                                        </tr>
+                                    </tbody>
+                                </nz-table>
+                                <ng-template #indicatorTemplate>
+                                    <div class="circle-loading-svg">
+                                        <svg height="50" width="50" viewBox="0 0 50 50">
+                                            <circle id="circle" cx="25" cy="25" r="20" />
+                                        </svg>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </nz-drawer>
+
+            <ng-template #extra>
+                <label class="tableFontSize">计算范围： </label>
+                <input class="tableFontSize" nz-input placeholder="" nzSize="small" maxlength="3"
+                    [(ngModel)]="rangeLeft" style="
+            width: 1.6rem;
+            text-align: center;
+            background-color: rgb(97, 97, 97);
+          " />
+                <label> °C ~ </label>
+                <input class="tableFontSize" nz-input placeholder="" nzSize="small" maxlength="3"
+                    [(ngModel)]="rangeRight" style="
+            width: 1.6rem;
+            text-align: center;
+            background-color: rgb(97, 97, 97);
+          " />
+                <label style="margin-right: 5rem"> °C</label>
+                <button mat-raised-button color="primary" class="buttonSize" (click)="requestCalcDataByTask()" style="
+            width: 3rem;
+            font-size: 0.5rem;
+            height: 1.2rem;
+            margin-right: 1rem;
+          ">
+                    计算
+                </button>
+                <!-- <button mat-raised-button color="primary" class="buttonSize" (click)="changeShowView()"
+                    style="width:3rem;font-size: 0.5rem;height: 1.2rem;">{{chartShowFlg ? '运算结果' : '显示图表'}}</button> -->
+            </ng-template>
+            <!-- show task detail info in chart -->
+            <!-- show message dialog -->
+            <nz-modal style="font-size: 0.5rem" [(nzVisible)]="showMsgDialog" nzTitle="提示" (nzOnCancel)="handleCancel()"
+                (nzOnOk)="handleOk()">
+                <ng-container *nzModalContent>
+                    <p style="font-size: 0.5rem">{{ dialogMsg }}</p>
+                </ng-container>
+            </nz-modal>
+            <nz-modal style="font-size: 0.5rem" [(nzVisible)]="showDeleteConfirmFlg" nzTitle="提示"
+                (nzOnCancel)="deleteCancel()" (nzOnOk)="deleteOk()">
+                <ng-container *nzModalContent>
+                    <p style="font-size: 0.6rem; text-align: center">
+                        请确认是否删除已勾选任务
+                    </p>
+                    <!-- <p style="font-size: 0.5rem">任务ID: {{ deleteConfirmInfo[0] }}</p>
+                    <p style="font-size: 0.5rem">描述： {{ deleteConfirmInfo[1] }}</p> -->
+                </ng-container>
+            </nz-modal>
+        </mat-card-content>
+    </mat-card>
+</div>

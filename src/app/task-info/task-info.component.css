@@ -1,0 +1,23 @@
+.taskInfLayout {
+  font-size: 0.7rem;
+    display: grid;
+    grid-template-areas: "taskName taskPos  alarm" ;
+    grid-template-columns: 2 1 1;
+    grid-column-gap: 0.2rem;
+    background-color: gray;
+    padding-left: 0.5rem;
+    height: 100%;
+    padding-top: 0!important;
+}
+p {
+  margin-top: 0.3rem;
+}
+  
+.taskInfChartLayout {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+.item {
+  flex-grow: 1;
+}

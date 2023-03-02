@@ -1,0 +1,35 @@
+
+.cLayout {
+    
+    display: flex;
+    flex-direction: column; 
+    height: 100%;
+}
+
+
+
+
+.footer {
+    background-color: #D0EBF4;
+    height: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.content {
+    
+    flex: 1; 
+    overflow-y: auto; 
+    overflow: auto;
+}
+.footerButton {
+    font-size: 0.8rem;
+    margin-right:2rem;
+    margin-top: 0.3rem;
+     height: 1.4rem;
+     width:4rem;
+     background-color:tomato;
+}
+.SetFontSize{
+    font-size: 0.6rem;
+}

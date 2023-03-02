@@ -1,0 +1,63 @@
+<!-- 
+  <div  fxFlex="column">
+    <app-task-info></app-task-info>
+    <app-task-info></app-task-info>
+    <app-task-info></app-task-info>
+    <app-task-info></app-task-info>
+    <app-task-info></app-task-info>
+    <app-task-info></app-task-info>
+  </div>
+
+ -->
+
+<!-- 
+    <div style="height: 100%; overflow:scroll; ">
+</div> -->
+
+<!-- <style>
+  .cLayout {
+    display: grid;
+    grid-template-areas: "content" "footer" ;
+    grid-template-rows: auto 2rem;
+    grid-row-gap: 0.2rem;
+    grid-column-gap: 0.2rem;
+    background-color: gray;
+    height: 100%;
+  }
+</style> -->
+<div class="cLayout">
+  <div class="content"  >
+    <app-task-info></app-task-info>
+    <!-- <div  style="width: auto;padding-right: 0.3rem;" >
+      <app-task-info ></app-task-info>
+      <app-task-info></app-task-info>
+      <app-task-info></app-task-info>
+    </div> -->
+    <!-- <div  *ngIf="loadTasksFlg">
+
+      <div  style="width: auto;padding-right: 0.3rem;" class="content" *ngFor="let box of tasks; let i = index">
+        <app-task-info-view-ref [TaskUid]="box.Uid" [TaskCfg]="box.TaskInfo"></app-task-info-view-ref>
+      </div>
+    </div> -->
+</div>
+
+
+
+
+  <div  class="footer" >
+    
+    <button mat-flat-button  class="footerButton"  [matMenuTriggerFor]="menu">新建任务</button>
+    
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="navigateByUrl('/mainboard/singleCylinderTask')">
+        <mat-icon>settings_input_component</mat-icon>
+        <span>单缸任务</span>
+      </button>
+      <button mat-menu-item (click)="navigateByUrl('/mainboard/dualCylinderTask')">
+        <mat-icon>settings_input_component</mat-icon>
+        <span>双缸任务</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+ 

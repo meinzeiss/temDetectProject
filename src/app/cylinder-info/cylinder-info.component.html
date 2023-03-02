@@ -1,0 +1,36 @@
+
+<mat-card >
+    <mat-card-title>工位{{PosIdx}}</mat-card-title>
+   <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
+    
+    <mat-card-content #divUpponChart >
+            
+    <div #mychart echarts [options]="chartOption" class="chartBox" [autoResize]="false" (chartInit)="onChartInit($event)" [merge]="updateOptions" style="height: 8rem;width: 100%;">
+    </div>
+    <div fxLayout="row" style="margin-top:-1rem;"  >
+        <p fxFlex="100%" class="SetFontSize">实时力值</p> <p fxFlex="100%" class="SetFontSize">{{vRealForce}}</p>
+    </div> 
+    <div fxLayout="row" style="margin-top:-0.5rem;" >
+        <p fxFlex="20%" style="min-width: 2rem;" class="SetFontSize">{{slider.value}}</p>
+        <mat-slider  min="-16" max="16" step="10" value="0" #slider aria-label="unit(s)" fxFlex="80%" class="slider" ></mat-slider>
+    </div> 
+    <div fxLayout="row"  >
+        <button mat-raised-button color="primary" class="buttonSize" fxFlex="100%" (click)="action(1);" >动作</button>
+        <button mat-raised-button color="primary" class="buttonSize" fxFlex="100%" (click)="action(0);" >释力</button>
+        <!-- <button mat-raised-button color="primary" class="buttonSize" fxFlex="100%" ><mat-icon>more_vert</mat-icon></button> -->
+    </div> 
+    <div fxLayout="row"  >
+        <button mat-raised-button color="primary" class="buttonSize" fxFlex="100%" [matMenuTriggerFor]="menu" >其他设置</button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="action2(30);">
+            <mat-icon>radio_button_unchecked</mat-icon>
+            <span>Ad 归0</span>
+            </button>
+            <button mat-menu-item (click)="action2(31);">
+            <mat-icon>radio_button_unchecked</mat-icon>
+            <span>力显 归0</span>
+            </button>
+      </mat-menu>
+    </div> 
+    </mat-card-content>
+</mat-card>

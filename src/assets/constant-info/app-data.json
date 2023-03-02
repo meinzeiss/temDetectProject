@@ -1,0 +1,50 @@
+{
+    "app": {
+        "appTitle":"Gx10无纸记录仪 数据远程采集服务",
+        "monitorCenterUrl": "http://localhost:14091/#/mainboard",
+        "channelMode": 15,
+        "samplingPeriodEnable":"false",
+        "samplingPeriod": 1,
+        "size": "large",
+        "ip": "http://121.196.8.190:9085",
+        "ws": "ws://121.196.8.190:9085/data/ws",
+        "menu": [
+            {
+                "text": "实时数据",
+                "link": "/mainboard/realTimeChart",
+                "iconfont": "icon-caidan1",
+                "module": "handle"
+            },
+            {
+                "text": "建立任务",
+                "link": "/mainboard/newCollectTask",
+                "iconfont": "icon-lishi",
+                "module": "history"
+            },
+            {
+                "text": "任务历史",
+                "link": "/mainboard/historyCollectedTask",
+                "iconfont": "icon-weihu",
+                "module": "maintain"
+            },
+            {
+                "text": "系统状态",
+                "link": "/mainboard/systemStatus",
+                "iconfont": "icon-caidan",
+                "module": "menu"
+            },
+            {
+                "text": "系统设置",
+                "link": "/mainboard/systemConfig",
+                "iconfont": "icon-shoudongdiaojie",
+                "module": "manual"
+            },
+            {
+                "text": "历史任务详情",
+                "link": "/mainboard/historyTaskDetail",
+                "iconfont": "icon-qitaxinxi",
+                "module": "other"
+            }
+        ]
+    }
+}
