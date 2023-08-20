@@ -1,6 +1,6 @@
 <div class="cLayout">
     <mat-card class="content" style="margin-right: 0.3rem;margin-bottom: 0.3rem;">
-        <mat-card-title>采集信息</mat-card-title>
+        <mat-card-title>Collected Information</mat-card-title>
         <!-- <img mat-card-image src="assets/image/cylinder.jpg" alt="Air Cylinder" style="width:50%;height:50%;">  -->
         <mat-card-content #divUpponChart style="flex:1;">
             <div #mychart echarts [options]="chartOption" class="chartBox" [autoResize]=true
@@ -14,14 +14,14 @@
                 <div *ngFor="let group of groups, let gIdx = index">
                     <mat-checkbox class="example-margin" style="width: 4rem;padding-left:0.4rem; font-size: 0.6rem;
                     background-color: gray;border-radius: 0.2rem 0.2rem 0rem 0rem;" [(ngModel)]="group.allChecked"
-                        [(indeterminate)]="group.indeterminate" (change)="updateAllChecked(gIdx,$event.checked)">分组
+                        [(indeterminate)]="group.indeterminate" (change)="updateAllChecked(gIdx,$event.checked)">Grouped
                         {{gIdx + 1}}</mat-checkbox>
                     <div class="cyInf" fxLayout="row" style="width: 20rem;padding-top: 0.2rem;">
                         <div fxLayout="row" style="margin-top: 0.2rem;padding-left: 0.2rem;"
                             *ngFor="let channel of group.channels;">
                             <mat-checkbox (change)="updateSingleChecked(channel,$event.checked)"
                                 [checked]="channel.checked" name="{{group.groupIdx}}-channel{{channel.name}}">
-                                通道-{{channel.name}}</mat-checkbox>
+                                Path-{{channel.name}}</mat-checkbox>
                             <p class="temperature" style="width:2rem;">{{channel.temperature}} °C</p>
                         </div>
                     </div>
@@ -30,20 +30,20 @@
                 <div style="flex:1; display: flex; flex-direction: row;justify-content: end;">
                     <div fxLayout="row">
                         <button mat-raised-button color="primary" class="buttonSize" style="width: 5.5rem;"
-                            *ngIf="hasTask" (click)="showCalcResult()">运算结果</button>
+                            *ngIf="hasTask" (click)="showCalcResult()">Calculation Result</button>
                         <button mat-raised-button color="primary" class="buttonSize" style="width: 5.5rem;"
-                            *ngIf="hasTask" (click)="stopTask()">结束采集任务</button>
+                            *ngIf="hasTask" (click)="stopTask()">End Collection Task</button>
                     </div>
                 </div>
             </div>
             <nz-drawer [nzClosable]="false" [nzVisible]="showCalcResultFlg" [nzPlacement]="placement" [nzExtra]="extra"
-                nzTitle="运算结果" (nzOnClose)="close()" [nzClosable]=true nzHeight="24rem" nzWidth="22rem">
+                nzTitle="Calculation Result" (nzOnClose)="close()" [nzClosable]=true nzHeight="24rem" nzWidth="22rem">
                 <ng-container *nzDrawerContent>
                     <nz-table #headerTable [nzData]="calcData" [nzPageSize]="15" [nzScroll]="{ y: '18rem' }"
                         [nzLoading]="isCalcTableLoading" [nzLoadingIndicator]="indicatorTemplate">
                         <thead>
                             <tr class="tableFontSize">
-                                <th>选择通道</th>
+                                <th>Choose Path</th>
                                 <th>MIN</th>
                                 <th>MAX</th>
                                 <th>P-P</th>
@@ -71,7 +71,7 @@
             </nz-drawer>
 
             <ng-template #extra>
-                <label class="tableFontSize">计算范围： </label>
+                <label class="tableFontSize">Calculation Path： </label>
                 <input class="tableFontSizeLarge" nz-input placeholder="" nzSize="middle" maxlength="3"
                     [(ngModel)]="rangeLeft"
                     style="width: 1.6rem;text-align: center;background-color: rgb(97, 97, 97);" />
@@ -83,10 +83,10 @@
                 <!-- <button nz-button nzType="default" style="width:2rem;background-color: rgb(97, 97, 97);"
                     (click)="requestCalcDataByTask()">计算</button> -->
                 <button class="tableFontSize" mat-raised-button color="primary" class="buttonSize"
-                    style="width:3rem;height: 1.2rem;" (click)="requestCalcDataByTask()">计算</button>
+                    style="width:3rem;height: 1.2rem;" (click)="requestCalcDataByTask()">Calculation</button>
             </ng-template>
 
-            <nz-modal style="font-size: 0.5rem;" [(nzVisible)]="showDialog" nzTitle="提示" (nzOnCancel)="handleCancel()"
+            <nz-modal style="font-size: 0.5rem;" [(nzVisible)]="showDialog" nzTitle="Hint" (nzOnCancel)="handleCancel()"
                 (nzOnOk)="handleOk()">
                 <ng-container *nzModalContent>
                     <p style="font-size: 0.5rem;">{{dialogMsg}}</p>

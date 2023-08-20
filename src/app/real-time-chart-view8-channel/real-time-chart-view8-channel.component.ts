@@ -82,8 +82,8 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
     '#e6194b', '#3cb44b', '#4363db', '#ffe119',
     '#800000', '#9a8324', '#469990', '#000075', ]
   selectedChannels: any = {
-    '通道1-1': false, '通道1-2': false, '通道1-3': false, '通道1-4': false, 
-    '通道1-5': false, '通道1-6': false, '通道1-7': false, '通道1-8': false, 
+    'Path 1-1': false, 'Path 1-2': false, 'Path 1-3': false, 'Path 1-4': false,
+    'Path 1-5': false, 'Path 1-6': false, 'Path 1-7': false, 'Path 1-8': false,
   }
   cmptName: string = 'RealTimeChartViewComponent';
   logSrv: LogService;
@@ -113,7 +113,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
   // rangs: number[] = [10, 20, 30, 40, 50, 60];
   // rangs2: number[] = [80, 70, 60, 50, 40, 30];
   timeX: string[] = [];
-  interTime: any;  
+  interTime: any;
   interTimeTmp: any;
   calcData: calcData[] = [];
   isCalcTableLoading: boolean = false;
@@ -240,8 +240,8 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
             // }
             // console.log(`res.Data[${x}][${y}] = ${res.Data[x][y]}`);
             this.groups[x].channels[y].temperature = illegalflg ? NaN : tmp;
-            this.groups[x].checkOptionsOne[y].label = `通道${x + 1}-${y + 1} ${tmp} °C`;
-            this.groups[x].checkOptionsOne[y].value = `通道${x + 1}-${y + 1}`;
+            this.groups[x].checkOptionsOne[y].label = `Path${x + 1}-${y + 1} ${tmp} °C`;
+            this.groups[x].checkOptionsOne[y].value = `Path${x + 1}-${y + 1}`;
 
             this.dataSrc[x * chnCnt + y].data.shift();
             this.dataSrc[x * chnCnt + y].data.push(tmp);
@@ -250,12 +250,12 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
             if (this.groups[x].checkOptionsOne[y].label.length > 0) {
               let dataSrcStr = this.groups[x].checkOptionsOne[y].label;
               this.logSrv.info(this.cmptName, `WebSocket: ${dataSrcStr}`);
-            }            
+            }
             let checked = this.groups[x].channels[y].checked;
             if (checked){
-              let channelMax = 0;          
+              let channelMax = 0;
               let channelMin = 0;
-              this.dataSrc[x * chnCnt + y].data.forEach(item => channelMax = (item > channelMax && item != NaN) ? item : channelMax);    
+              this.dataSrc[x * chnCnt + y].data.forEach(item => channelMax = (item > channelMax && item != NaN) ? item : channelMax);
               this.dataSrc[x * chnCnt + y].data.forEach(item => channelMin = (item < channelMin && item != NaN) ? item : channelMin)
               if(channelMax + (Math.round(channelMax*0.2)/10)*10 > this.currentMax){
                 console.log('channelMax.Up = ',channelMax + (Math.round(channelMax*0.2)/10)*10);
@@ -270,7 +270,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
               // console.log('channelMin',channelMin);
             }
           }
-        }        
+        }
         this.limitMax = (this.currentMax <= 50 ? 50 : this.currentMax);
         this.limitMin = (this.currentMin >= -10 ? -10 : this.currentMin);
         console.log('limitMax',this.limitMax);
@@ -279,7 +279,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
       }
     }
   }
-  
+
   checkMaxMinInDataCache(){
     let grpSize = this.groups.length;
     let chnCnt = this.groups[0].channels.length;
@@ -373,7 +373,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
     this.http.get(env.url(env.Api_LastTaskDataInMins), { params: queryParams, observe: 'response', responseType: 'arraybuffer' })
       .subscribe((response: HttpResponse<any>) => {
         // when no task running then websocket-service has no data to update (by default)
-        // let loadStorage: boolean = true; 
+        // let loadStorage: boolean = true;
         try {
           if (response != null && response != undefined) {
             // console.log('response Called');
@@ -409,7 +409,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
     if (this.chart != null && this.chart != undefined) {
       if (show) {
         this.chart.showLoading({
-          text: '加载中...',
+          text: 'Loding...',
           textColor: 'darkgray',
           color: 'darkgray',
           maskColor: 'rgba(97, 97, 97, 0.1)',
@@ -426,7 +426,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
       complete: () => { }, // completeHandler
       error: (e) => {
         console.log(e);
-      },    // errorHandler 
+      },    // errorHandler
       next: (res: any) => {
         console.log('stopTaskCallBack onResponse');
         console.log(res);
@@ -492,7 +492,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
               complete: () => { this.isCalcTableLoading = false; }, // completeHandler
               error: (e) => {
                 console.log(e);
-              },    // errorHandler 
+              },    // errorHandler
               next: (res: any) => {
                 console.log(res);
                 if (res != null && res != undefined && res.RtnData != undefined && res.Code == 0) {
@@ -544,7 +544,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
     this.interTimeTmp = setTimeout(() => {
       console.log('onChartInit called');
       this.requestTaskDataInLastMins();
-      // this.initEChartsClickListener(); 
+      // this.initEChartsClickListener();
     }, 500);
   }
   initChannelList() {
@@ -583,7 +583,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
   initCurrentPeriod(){
     this.currentPeriod = env.SrvOptions.SamplingPeriod;
     // this.showLen = this.maxLen / this.currentPeriod;
-    // this.intervalPeriod = this.currentPeriod > 0 ? 1000 * this.currentPeriod : 1000;    
+    // this.intervalPeriod = this.currentPeriod > 0 ? 1000 * this.currentPeriod : 1000;
     console.log('addTaskCallBack Called, env.SrvOptions.SamplingPeriod = ', env.SrvOptions.SamplingPeriod);
     console.log('addTaskCallBack Called, currentPeriod = ', this.currentPeriod);
     // console.log('addTaskCallBack Called, showLen = ', this.showLen);
@@ -596,8 +596,8 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
     startDt.setTime(startDt.getTime() - this.maxLen * 1000);
     for (let i = 0; i < this.showLen; i++) {
       //console.log((startDt.getTime() + 1000) / 1000);
-      // let diff = i == 0 ? 1000 : 1000 * this.currentPeriod; 
-      let diff = this.intervalPeriod; 
+      // let diff = i == 0 ? 1000 : 1000 * this.currentPeriod;
+      let diff = this.intervalPeriod;
       // console.log('diff =', diff);
       let dt = new Date(startDt.setTime(startDt.getTime() + diff));
       var timestamp = `${this.add0(dt.getHours())}:${this.add0(dt.getMinutes())}:${this.add0(dt.getSeconds())}`;
@@ -637,7 +637,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
     // console.log(this.dataSrc);
     // console.log(this.legendData);
   }
-  
+
   initCacheSelectdStatus() {
     console.log('initCacheSelectdStatus');
     // console.log(this.groups);
@@ -830,7 +830,7 @@ export class RealTimeChartView8ChannelComponent implements OnInit {
         //   },
         //   handle: {
         //     show: true,
-        //     color: 'ivroy'            
+        //     color: 'ivroy'
         //   }
         // },
       }

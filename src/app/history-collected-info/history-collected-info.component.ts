@@ -106,7 +106,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
   loading = false;
   pageSize = 10;
   pageIndex = 1;
-  //  
+  //
   markAreaRange: number[] = [-1, -1];
   taskDesc: string = '';
   selectedRangeMsg: string = '';
@@ -213,7 +213,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
     }
     this.chart.setOption({
       title: {
-        text: '选取时间范围: ' + this.selectedRangeMsg,
+        text: 'Choose Time Range: ' + this.selectedRangeMsg,
       }
     });
   }
@@ -246,13 +246,13 @@ export class HistoryCollectedInfoComponent implements OnInit {
   //           this.showChartLoading(false);
   //           this.dialogMsg = JSON.stringify(e);
   //           this.showMsgDlg()
-  //         },    // errorHandler 
+  //         },    // errorHandler
   //         next: (res: any) => {
   //           // console.log('onTaskDelete onResponse');
   //           console.log(res);
   //           this.showChartLoading(false);
   //           if(res != null && res != undefined && res.Code == 0){
-  //             this.dialogMsg = '删除成功';              
+  //             this.dialogMsg = '删除成功';
   //           }else{
   //             this.dialogMsg = '删除失败(或该记录已不存在)';
   //           }
@@ -291,7 +291,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
             // this.dialogMsg = JSON.stringify(e);
             this.dialogMsg = '删除失败';
             this.showMsgDlg()
-          },    // errorHandler 
+          },    // errorHandler
           next: (res: any) => {
             // console.log('onTaskDelete onResponse');
             console.log(res);
@@ -420,7 +420,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
     let name = event.name;
     let selectedList = event.selected;
     for (let i = 0; i < 15; i++) {
-      let name = `通道${Math.floor(i / 5) + 1}-${i % 5 + 1}`;
+      let name = `Path${Math.floor(i / 5) + 1}-${i % 5 + 1}`;
       this.legendSelected[i] = selectedList[name];
     }
     this.initDefaultCalcShowList();
@@ -485,7 +485,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
               complete: () => { this.isCalcTableLoading = false; }, // completeHandler
               error: (e) => {
                 console.log(e);
-              },    // errorHandler 
+              },    // errorHandler
               next: (res: any) => {
                 console.log(res);
                 if (res != null && res != undefined && res.RtnData != undefined && res.RtnData != null && res.Code == 0) {
@@ -601,7 +601,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
       },
       top: 40,
       right: 40,
-      itemSize: 40, // 设置图标大小      
+      itemSize: 40, // 设置图标大小
       showTitle: true,
       feature: {
         brush: {
@@ -678,7 +678,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
         dataArray.push(NaN);
       }
       var data: Line = {
-        name: `通道${Math.floor(x / 5 + 1)}-${x % 5 + 1}`,
+        name: `Path${Math.floor(x / 5 + 1)}-${x % 5 + 1}`,
         type: 'line',
         smooth: 0.4,
         symbol: 'none',
@@ -716,7 +716,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
     // console.log('init chart selected on Called');
     let tmpSelected = '{';
     for (let i = 0; i < 15; i++) {
-      let name = `通道${Math.floor(i / 5) + 1}-${i % 5 + 1}`;
+      let name = `Path${Math.floor(i / 5) + 1}-${i % 5 + 1}`;
       let value = `"${name}":${this.legendSelected[i]}`;
       tmpSelected = tmpSelected.concat(value) + ',';
     }
@@ -765,7 +765,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
         that.chart.setOption({
           title: {
             show: true,
-            text: '选取时间范围: ' + that.selectedRangeMsg,
+            text: 'Choose Time Range: ' + that.selectedRangeMsg,
             top: 52,
             right: 180,
             width: 100,
@@ -894,7 +894,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
   //   this.deleteConfirmInfo[1] = desc;
   //   // this.dialogMsg = `是否确认删除该任务,<br/> 任务ID: ${id},<br/> 描述：${desc} `;
   //   this.showDeleteConfirmFlg = true;
-  // }  
+  // }
   deleteCancel(): void {
     // console.log('Button cancel clicked!');
     this.currentDelUid = '';
@@ -991,7 +991,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
   //     for (let i = 0; i < 15; i++) {
   //       let name = `通道${Math.floor(i/5) + 1}-${i%5 + 1}`;
   //       let value = `"${name}":${this.legendSelected[i]}`;
-  //       tmpSelected = tmpSelected.concat(value) + ',';      
+  //       tmpSelected = tmpSelected.concat(value) + ',';
   //     }
   //     tmpSelected = tmpSelected.substring(0,tmpSelected.length - 1);
   //     tmpSelected = tmpSelected.concat('}');
@@ -1028,7 +1028,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
   //     error: (e) => {
   //       console.log('Api_HistoryTasks error');
   //       console.log(e);
-  //     },    // errorHandler 
+  //     },    // errorHandler
   //     next: (res: any) => {
   //       console.log('Api_HistoryTasks next');
   //       // console.log(res);
@@ -1060,7 +1060,7 @@ export class HistoryCollectedInfoComponent implements OnInit {
   //         }
   //         console.log(this.listOfData);
   //       }
-  //     },     // nextHandler 
+  //     },     // nextHandler
   //   });
   // }
 }

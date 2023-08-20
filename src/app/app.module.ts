@@ -15,8 +15,7 @@ import { CylinderViewComponent } from './cylinder-view/cylinder-view.component';
 import { TaskViewComponent } from './task-view/task-view.component';
 import { MenuViewComponent } from './menu-view/menu-view.component';
 import { CylinderInfoComponent } from './cylinder-info/cylinder-info.component';
-// https://www.npmjs.com/package/angular-disable-browser-back-button
-// 防止页面后退
+
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -167,8 +166,8 @@ registerLocaleData(zh);
       multi: true
     },
     {
-      provide: NZ_I18N, 
-      useValue: zh_CN,  
+      provide: NZ_I18N,
+      useValue: zh_CN,
     },
   ],
   bootstrap: [AppComponent]
@@ -183,7 +182,7 @@ export function initializeApp(httpClient: HttpClient) {
       error: (e: any) => {
         // console.log(e);
         reject(e);
-      },    // errorHandler 
+      },    // errorHandler
       next: (res: any) => {
         // console.log(res);
         env.SrvInfo.BaseUrl = res.app.ip;

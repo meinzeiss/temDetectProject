@@ -65,7 +65,7 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Credentials':'true',
-	
+
     // Authorization: 'my-auth-token'
   })
 };
@@ -83,9 +83,9 @@ export class RealTimeChartViewComponent implements OnInit {
     '#800000', '#9a8324', '#469990', '#000075', '#f58231',
     '#fabed4', '#fffac8', '#aaffc3', '#dcbeff', '#4b0082']
   selectedChannels: any = {
-    '通道1-1': false, '通道1-2': false, '通道1-3': false, '通道1-4': false, '通道1-5': false,
-    '通道2-1': false, '通道2-2': false, '通道2-3': false, '通道2-4': false, '通道2-5': false,
-    '通道3-1': false, '通道3-2': false, '通道3-3': false, '通道3-4': false, '通道3-5': false,
+    'Path1-1': false, 'Path1-2': false, 'Path1-3': false, 'Path1-4': false, 'Path1-5': false,
+    'Path2-1': false, 'Path2-2': false, 'Path2-3': false, 'Path2-4': false, 'Path2-5': false,
+    'Path3-1': false, 'Path3-2': false, 'Path3-3': false, 'Path3-4': false, 'Path3-5': false,
   }
   cmptName: string = 'RealTimeChartViewComponent';
   logSrv: LogService;
@@ -144,7 +144,7 @@ export class RealTimeChartViewComponent implements OnInit {
     this.initTimeX();
     this.initCacheSelectdStatus();
 
-    this.interTime = setInterval(() => {      
+    this.interTime = setInterval(() => {
       let options = this.chart.getOption()
       // console.log('setInterval, options =',options);
       if (this.chart != null && this.chart != undefined
@@ -213,10 +213,10 @@ export class RealTimeChartViewComponent implements OnInit {
           for (let y = 0; y < res.Data[x].length; y++) {
 
             let tmp = res.Data[x][y] / 10;
-            // }      
+            // }
             // if(x == 0 && y == 0){
             //   tmp = Number.parseInt((-100000*(1 + Math.random())).toFixed());
-            // }    
+            // }
             // if(x == 2 && y == 1){
             //   tmp = Number.parseInt((900*(1 + Math.random())).toFixed());
             // }
@@ -227,8 +227,8 @@ export class RealTimeChartViewComponent implements OnInit {
             //
             this.groups[x].channels[y].temperature = illegalflg ? NaN : tmp;;
             // let tmpStr = this.addBlankFront(tmp);
-            this.groups[x].checkOptionsOne[y].label = `通道${x + 1}-${y + 1} ${tmp} °C`;
-            this.groups[x].checkOptionsOne[y].value = `通道${x + 1}-${y + 1}`;
+            this.groups[x].checkOptionsOne[y].label = `Path ${x + 1}-${y + 1} ${tmp} °C`;
+            this.groups[x].checkOptionsOne[y].value = `Path ${x + 1}-${y + 1}`;
             this.dataSrc[x * 5 + y].data.shift();
             this.dataSrc[x * 5 + y].data.push(tmp);
             // if ((tmp + (10 - tmp % 10)) - maxTmp > 0) {
@@ -237,12 +237,12 @@ export class RealTimeChartViewComponent implements OnInit {
             if (this.groups[x].checkOptionsOne[y].label.length > 0) {
               let dataSrcStr = this.groups[x].checkOptionsOne[y].label;
               this.logSrv.info(this.cmptName, `WebSocket: ${dataSrcStr}`);
-            }          
+            }
             let checked = this.groups[x].channels[y].checked;
             if (checked){
-              let channelMax = 0;        
+              let channelMax = 0;
               let channelMin = 0;
-              this.dataSrc[x * chnCnt + y].data.forEach((item: number) => channelMax = item > channelMax && item != NaN ? item : channelMax);      
+              this.dataSrc[x * chnCnt + y].data.forEach((item: number) => channelMax = item > channelMax && item != NaN ? item : channelMax);
               this.dataSrc[x * chnCnt + y].data.forEach((item: number) => channelMin = item < channelMin && item != NaN ? item : channelMin)
               // console.log('channelMax',channelMax);
               // console.log('channelMin',channelMin);
@@ -370,7 +370,7 @@ export class RealTimeChartViewComponent implements OnInit {
     if (this.chart != null && this.chart != undefined) {
       if (show) {
         this.chart.showLoading({
-          text: '加载中...',
+          text: 'Loading...',
           textColor: 'darkgray',
           color: 'darkgray',
           maskColor: 'rgba(97, 97, 97, 0.1)',
@@ -387,11 +387,11 @@ export class RealTimeChartViewComponent implements OnInit {
       complete: () => { }, // completeHandler
       error: (e) => {
         console.log(e);
-      },    // errorHandler 
+      },    // errorHandler
       next: (res: any) => {
         // console.log('stopTaskCallBack onResponse');
         // console.log(res);
-        this.dialogMsg = '当前任务已结束';
+        this.dialogMsg = 'Current Task Ended';
         this.showDialog = true;
       },     // nextHandler
     });
@@ -420,7 +420,7 @@ export class RealTimeChartViewComponent implements OnInit {
     let rngR = Number.parseFloat(this.rangeRight);
     let canCalc = false;
     for (let i = 0; i < 15; i++) {
-      let name = `通道${Math.floor(i / 5) + 1}-${i % 5 + 1}`;
+      let name = `Path ${Math.floor(i / 5) + 1}-${i % 5 + 1}`;
       canCalc = canCalc || this.selectedChannels[name];
     }
     if (canCalc) {
@@ -451,7 +451,7 @@ export class RealTimeChartViewComponent implements OnInit {
               complete: () => { this.isCalcTableLoading = false; }, // completeHandler
               error: (e) => {
                 console.log(e);
-              },    // errorHandler 
+              },    // errorHandler
               next: (res: any) => {
                 console.log(res);
                 if (res != null && res != undefined && res.RtnData != undefined && res.Code == 0) {
@@ -488,7 +488,7 @@ export class RealTimeChartViewComponent implements OnInit {
       }
     } else {
       console.log(`rngL = ${rngL}, rngR = ${rngR}`);
-      this.dialogMsg = '请在图表中至少勾选一条通道后计算';
+      this.dialogMsg = '请在图表中至少勾选一条Path 后计算';
       this.subShowDlg();
     }
   }
@@ -503,7 +503,7 @@ export class RealTimeChartViewComponent implements OnInit {
     setTimeout(() => {
       console.log('onChartInit called');
       this.requestTaskDataInLastMins();
-      // this.initEChartsClickListener(); 
+      // this.initEChartsClickListener();
     }, 500);
   }
   initChannelList() {
@@ -530,8 +530,8 @@ export class RealTimeChartViewComponent implements OnInit {
       }
       for (let z = 0; z < 5; z++) {
         let chkbox: checkBoxInfo = {
-          label: `通道${x + 1}-${z + 1} ${NaN} °C`,
-          value: `通道${x + 1}-${z + 1}`,
+          label: `Path ${x + 1}-${z + 1} ${NaN} °C`,
+          value: `Path ${x + 1}-${z + 1}`,
           checked: false,
         };
         checkBoxs.push(chkbox);
@@ -565,7 +565,7 @@ export class RealTimeChartViewComponent implements OnInit {
       }
       var data: Line = {
         id: x,
-        name: `通道${Math.floor(x / 5 + 1)}-${x % 5 + 1}`,
+        name: `Path ${Math.floor(x / 5 + 1)}-${x % 5 + 1}`,
         type: 'line',
         smooth: 0.4,
         symbol: 'none',
@@ -596,7 +596,7 @@ export class RealTimeChartViewComponent implements OnInit {
         let isAllChked = true;
         let indeterminate = false;
         for (let y = 0; y < size; y++) {
-          let name = `通道${x + 1}-${y + 1}`;
+          let name = `Path ${x + 1}-${y + 1}`;
           let currentChecked = statusArray[x * size + y] == 'true';
           this.groups[x].channels[y].checked = currentChecked;
           this.groups[x].checkOptionsOne[y].checked = currentChecked;
@@ -645,7 +645,7 @@ export class RealTimeChartViewComponent implements OnInit {
     // console.log(channel);
     let grpIdx = channel.groupIdx - 1;
     let channelCnt = this.groups[0].channels.length;
-    let chnNm = `通道${channel.groupIdx}-${channel.name}`;
+    let chnNm = `Path ${channel.groupIdx}-${channel.name}`;
     // console.log(chnNm);
     for (let i = 0; i < channelCnt; i++) {
       let labelNm = this.groups[grpIdx].checkOptionsOne[i].value;
@@ -725,7 +725,7 @@ export class RealTimeChartViewComponent implements OnInit {
       {
         max: this.yMax,
         min: -10,
-        name: '温度°C',
+        name: 'Temp °C',
         type: 'value',
         nameTextStyle: {
           fontSize: 16,
@@ -773,7 +773,7 @@ export class RealTimeChartViewComponent implements OnInit {
         //   },
         //   handle: {
         //     show: true,
-        //     color: 'ivroy'            
+        //     color: 'ivroy'
         //   }
         // },
       }
@@ -847,16 +847,16 @@ export class RealTimeChartViewComponent implements OnInit {
       + ':' + (second < 10 ? '0' + second : second);
     return time;
   };
-  // initEChartsClickListener(){    
+  // initEChartsClickListener(){
   //   console.log('initEChartsClickListener called');
   //   var that = this;
   //   that.markAreaRange = [];
   //   this.chart.on('click', function (params: any) {
-  //     console.warn('EChart on clicked !!!');           
-  //     console.warn('params.event.type: ',params.event.type);  
-  //     console.warn('params.componentType: ',params.componentType);   
-  //     console.warn('params.dataIndex: ',params.dataIndex);   
-  //     console.warn('params.value: ',params.value);  
+  //     console.warn('EChart on clicked !!!');
+  //     console.warn('params.event.type: ',params.event.type);
+  //     console.warn('params.componentType: ',params.componentType);
+  //     console.warn('params.dataIndex: ',params.dataIndex);
+  //     console.warn('params.value: ',params.value);
   //     let idx = params.dataIndex;
   //     if('xAxis' == params.componentType && params.dataIndex >= 0){
   //       if(that.markAreaRange.length == 0){
@@ -868,26 +868,26 @@ export class RealTimeChartViewComponent implements OnInit {
   //       }else if(that.markAreaRange.length == 2){
   //         let middle:number = (that.markAreaRange[1] - that.markAreaRange[0])/2 + that.markAreaRange[0];
   //         that.markAreaRange[0] = idx < that.markAreaRange[0] ? idx : (idx < middle ? idx : that.markAreaRange[0]);
-  //         that.markAreaRange[1] = idx > that.markAreaRange[1] ? idx : (idx > middle ? idx : that.markAreaRange[1]);          
+  //         that.markAreaRange[1] = idx > that.markAreaRange[1] ? idx : (idx > middle ? idx : that.markAreaRange[1]);
   //       }
   //     }
-  //     console.warn(that.markAreaRange);    
+  //     console.warn(that.markAreaRange);
   //     if(that.markAreaRange.length == 2)   {
-  //       let mrkArea = that.getMarkArea();  
-  //       console.warn(mrkArea);    
+  //       let mrkArea = that.getMarkArea();
+  //       console.warn(mrkArea);
   //       that.dataSrc[0].markArea = mrkArea;
-  //       console.warn(that.dataSrc[0].data);    
+  //       console.warn(that.dataSrc[0].data);
   //       that.updateOptions = {
   //         series: that.dataSrc,
   //       };
   //     }
-  //   });    
+  //   });
   //   this.chart.on('dblclick', function (params: any) {
-  //     console.warn('EChart on clicked !!!');           
-  //     console.warn('params.event.type: ',params.event.type);  
-  //     console.warn('params.componentType: ',params.componentType);   
-  //     console.warn('params.dataIndex: ',params.dataIndex);   
-  //     console.warn('params.value: ',params.value);  
+  //     console.warn('EChart on clicked !!!');
+  //     console.warn('params.event.type: ',params.event.type);
+  //     console.warn('params.componentType: ',params.componentType);
+  //     console.warn('params.dataIndex: ',params.dataIndex);
+  //     console.warn('params.value: ',params.value);
   //     that.markAreaRange = [];
   //     that.dataSrc[0].markArea = '';
   //   });

@@ -2,29 +2,29 @@
     <mat-card style="width: auto;margin-right: 0.3rem;margin-bottom: 0.3rem;" class="content">
         <mat-card-content fxLayout="column">
             <div style="display: flex;flex-direction: row;">
-                <label style="width: 4.5rem;font-size: 0.6rem;">任务描述：</label>
+                <label style="width: 4.5rem;font-size: 0.6rem;">Task Description：</label>
                 <textarea nz-input
                     style="font-size: 0.6rem;width: 12rem;height: 4.5rem;color: ivory;background-color:#484845;border-radius: 0.1rem;border-color: grey;padding: 0.1rem;"
-                    maxlength="50" placeholder="请录入描述内容" [(ngModel)]="desc" nzAutosize></textarea>
+                    maxlength="50" placeholder="Enter Content" [(ngModel)]="desc" nzAutosize></textarea>
             </div>
             <div fxLyout="row" style="align-items: center;margin-top: 1rem;">
-                <mat-label style="width: 4.5rem; font-size: 0.6rem;margin-right: 0.2rem;">预设结束时间：</mat-label>
-                <nz-date-picker nzPlaceHolder="请选择日期时间" nzFormat="yyyy-MM-dd HH:mm" [nzDisabledDate]="disabledDate"
+                <mat-label style="width: 4.5rem; font-size: 0.6rem;margin-right: 0.2rem;">Set Task Ending Time：</mat-label>
+                <nz-date-picker nzPlaceHolder="Choose Time" nzFormat="yyyy-MM-dd HH:mm" [nzDisabledDate]="disabledDate"
                     [nzDisabledTime]="disabledDateTime" [nzShowTime]="{ nzFormat: 'HH:mm' }" nzSize="large" ngModel
                     (ngModelChange)="onChange($event)" (nzOnOk)="onOk($event)" style="border-color: gray;">
                 </nz-date-picker>
             </div>
             <div style="display: flex;flex-direction: row;margin-top: 1rem;">
-                <mat-label style="width: 4.5rem; font-size: 0.6rem;">客户公司名称：</mat-label>
+                <mat-label style="width: 4.5rem; font-size: 0.6rem;">Customer Name：</mat-label>
                 <textarea nz-input rows="2"
                     style="font-size: 0.6rem;width: 12rem;height: 1.2rem; color: ivory;background-color:#484845;border-radius: 0.1rem;border-color: grey;"
-                    maxlength="30" placeholder="请录入名称" [(ngModel)]="companyName" nzAutosize ></textarea>
+                    maxlength="30" placeholder="Enter Name" [(ngModel)]="companyName" nzAutosize ></textarea>
             </div>
             <!-- <pre>Selected time: {{selectDtStr}}</pre>
         <div style="height: 2rem;"></div>
         <hr /> -->
             <div *ngIf="samplingPeriodEnable" fxLayout="row" style="align-items: center;margin-top: 1rem;">
-                <mat-label style="width: 4.5rem; font-size: 0.6rem;">任务采样间隔：</mat-label>
+                <mat-label style="width: 4.5rem; font-size: 0.6rem;">Task Sampling Interval：</mat-label>
                 <!-- <button nz-button nz-dropdown [nzDropdownMenu]="perioditems"
                     style="width:5rem;font-size: 0.6rem;background-color:#484845;border-radius: 0.1rem;border-color: grey;padding: 0.1rem;color: ivory;">
                     {{selectedPeriod}}
@@ -33,7 +33,7 @@
                 <nz-button-group>
                     <button nz-button
                         style="width:4.5rem;font-size: 0.6rem;background-color:#484845;border-radius: 0.1rem;border-color: grey;padding: 0.1rem;color: ivory;">
-                        {{selectedPeriod}} 秒
+                        {{selectedPeriod}} Second
                     </button>
                     <button nz-button nz-dropdown [nzDropdownMenu]="perioditems" nzPlacement="bottomLeft"
                         style="margin-left:0.1rem;width:1.5rem;font-size: 0.6rem;background-color:#484845;border-radius: 0.1rem;border-color: grey;padding: 0.1rem;color: ivory;">
@@ -43,19 +43,19 @@
                 <nz-dropdown-menu #perioditems="nzDropdownMenu">
                     <ul nz-menu>
                         <!-- <li nz-menu-item class="item" (click)="onSelected('1')">1 秒</li> -->
-                        <li nz-menu-item class="item" (click)="onSelected('60')">60 秒</li>
-                        <li nz-menu-item class="item" (click)="onSelected('300')">300 秒</li>
-                        <li nz-menu-item class="item" (click)="onSelected('600')">600 秒</li>
-                        <li nz-menu-item class="item" (click)="onSelected('900')">900 秒</li>
-                        <li nz-menu-item class="item" (click)="onSelected('1200')">1200 秒</li>
-                        <li nz-menu-item class="item" (click)="onSelected('1500')">1500 秒</li>
-                        <li nz-menu-item class="item" (click)="onSelected('1800')">1800 秒</li>
+                        <li nz-menu-item class="item" (click)="onSelected('60')">60 Sec</li>
+                        <li nz-menu-item class="item" (click)="onSelected('300')">300 Sec</li>
+                        <li nz-menu-item class="item" (click)="onSelected('600')">600 Sec</li>
+                        <li nz-menu-item class="item" (click)="onSelected('900')">900 Sec</li>
+                        <li nz-menu-item class="item" (click)="onSelected('1200')">1200 Sec</li>
+                        <li nz-menu-item class="item" (click)="onSelected('1500')">1500 Sec</li>
+                        <li nz-menu-item class="item" (click)="onSelected('1800')">1800 Sec</li>
                     </ul>
                 </nz-dropdown-menu>
             </div>
             <button mat-raised-button color="primary" class="buttonSize" style="width: 5rem;margin-top: 2rem;"
-                (click)="onStartTask()" [disabled]="hasTask">开始任务</button>
-            <nz-modal [(nzVisible)]="showDlgFlg" nzType="default" nzTitle="提示" (nzOnCancel)="handleCancel()" nzFooter=null >
+                (click)="onStartTask()" [disabled]="hasTask">Task Start</button>
+            <nz-modal [(nzVisible)]="showDlgFlg" nzType="default" nzTitle="Hint" (nzOnCancel)="handleCancel()" nzFooter=null >
                 <ng-container *nzModalContent>
                     <p>{{dlgMsg}}</p>
                 </ng-container>

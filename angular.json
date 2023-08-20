@@ -112,6 +112,13 @@
               "../node_modules/echarts/dist/echarts.min.js"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "remote-collection-sys:build:production"
+          }
         }
       }
     }

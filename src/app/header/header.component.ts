@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
   showMaintianBell:boolean = false;
 
   constructor(private router: Router, heartSrv: HeartCheckService, logger: LogService, httpClient: HttpClient, private cookieService: CookieService) {
-    this.taskInfo = '无任务';
+    this.taskInfo = 'No Task';
     this.localColor = 'primary';
     this.logSrv = logger;
     this.http = httpClient;
@@ -63,19 +63,19 @@ export class HeaderComponent implements OnInit {
       } else {
         this.taskUid = '';
       }
-      this.taskInfo = this.taskUid != null && this.taskUid.length > 0 ? '进行中' : '无任务';
+      this.taskInfo = this.taskUid != null && this.taskUid.length > 0 ? 'Running' : 'No task';
       if (this.taskUid.length > 0) {
-        this.logSrv.info(this.cmptName, `--任务ID [${this.taskUid}] 正在进行中--`);
+        this.logSrv.info(this.cmptName, `--TaskID [${this.taskUid}] Running--`);
       } else {
-        this.logSrv.info(this.cmptName, `--暂无任务--`);
+        this.logSrv.info(this.cmptName, `--No Task--`);
       }
     } else if (res == undefined || res == null) {
       this.taskUid = '';
       this.sysStatus = false;
       this.runningTask = undefined;
-      this.taskInfo = '无任务';
-      this.logSrv.info(this.cmptName, `--与服务端WebSocket通讯已中断--`);
-    }    
+      this.taskInfo = 'No Task';
+      this.logSrv.info(this.cmptName, `--Connection with Websocket is disabled--`);
+    }
     // console.log('Deal,res =', res);
     let status = res.status;
     if(status == 0){
@@ -126,13 +126,13 @@ export class HeaderComponent implements OnInit {
             this.loginStatus = 0;
             this.dialogMsg = '登录失败';
             this.showMsgDialog();
-          },    // errorHandler 
+          },    // errorHandler
           next: (res: any) => {
             this.isLoading = false;
             console.log(res);
             if (res.Code == 0) {
               this.loginStatus = 1;
-              this.dialogMsg = '登录成功';
+              this.dialogMsg = 'Login Successfully';
               this.showMsgDialog();
               let cookie = res.RtnData.token;
               console.log('loginWithPw-new cookie =', cookie);
@@ -144,7 +144,7 @@ export class HeaderComponent implements OnInit {
               //console.log(this.tasks)
             } else {
               this.loginStatus = 0;
-              this.dialogMsg = '登录失败, Code=' + res.Code;
+              this.dialogMsg = 'Login Fail, Code=' + res.Code;
               this.showMsgDialog();
             }
           },     // nextHandler
@@ -173,7 +173,7 @@ export class HeaderComponent implements OnInit {
               this.cookieSrv.delete('AppToken');
               // this.dialogMsg = '登录状态已过期，请重新登录';
               // this.showMsgDialog();
-            },    // errorHandler 
+            },    // errorHandler
             next: (res: any) => {
               // console.log(res);
               this.isLoading = false;
@@ -193,18 +193,18 @@ export class HeaderComponent implements OnInit {
     let fullUrl = env.AppInfo.MonitorUrl + '?token=' + cookie;
     console.log('fullUrl =', fullUrl);
     // window.location.href = fullUrl;
-    window.open(fullUrl, '_blank', 'noopener'); 
+    window.open(fullUrl, '_blank', 'noopener');
   }
   checkMaintainFlg(){
     setTimeout(() => {
-      let url = env.url(env.Api_CheckMaintain);      
+      let url = env.url(env.Api_CheckMaintain);
       // console.log('FullUrl =',url);
       this.http.get(env.url(env.Api_CheckMaintain)).subscribe({
         complete: () => { }, // completeHandler
         error: (e) => {
           // console.log('error');
           console.warn(e);
-        },    // errorHandler 
+        },    // errorHandler
         next: (res: any) => {
           // console.log(res);
           if(res != null && res != undefined && res.Code == 0
@@ -214,8 +214,8 @@ export class HeaderComponent implements OnInit {
             let nowDate = new Date().getTime()/1000;
             let diffDay = Math.round((nowDate - lastDate) / (60*60*24));
             let duration = res.RtnData.Duration;
-            let notifyDay = res.RtnData.NotifyDay;   
-            // console.log('lastDate =',lastDate);          
+            let notifyDay = res.RtnData.NotifyDay;
+            // console.log('lastDate =',lastDate);
             // console.log('diffDay =',diffDay);
             // console.log('duration =',duration);
             // console.log('notifyDay =',notifyDay);
@@ -292,7 +292,7 @@ export class HeaderComponent implements OnInit {
   //         this.dialogMsg = '退出登录失败';
   //         this.showMsgDialog();
   //         this.isLoading = false;
-  //       },    // errorHandler 
+  //       },    // errorHandler
   //       next: (res: any) => {
   //         console.log(res);
   //         this.loginStatus = 0;
